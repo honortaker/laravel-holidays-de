@@ -1,0 +1,54 @@
+{
+    "name": "honortaker/laravel-holidays-de",
+    "description": "Import german holidays into your laravel application",
+    "type": "library",
+    "keyworkds": [
+        "honortaker",
+        "laravel",
+        "holidays",
+        "import"
+    ],
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^11"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5",
+        "orchestra/testbench": "^9.9"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve --ansi"
+        ]
+    },
+    "autoload": {
+        "psr-4": {
+            "Honortaker\\LaravelHolidaysDe\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Honortaker\\LaravelHolidaysDe\\Tests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Honortaker\\LaravelHolidaysDe\\LaravelHolidaysDeServiceProvider"
+            ]
+        }
+    }
+}
