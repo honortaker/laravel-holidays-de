@@ -5,20 +5,20 @@ namespace Honortaker\LaravelHolidaysDe\Console\Commands;
 use Carbon\Carbon;
 use Honortaker\LaravelHolidaysDe\Models\Holiday;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class HolidaysImportCommand extends Command
 {
     protected $signature = 'holidays:import {year=0 : The year which should be imported}';
 
-    function handle()
+    public function handle()
     {
-        if (!is_numeric($this->argument('year'))) {
+        if (! is_numeric($this->argument('year'))) {
             $this->error('The year must be a number.');
+
             return Command::INVALID;
         }
-        $year = (int)$this->argument('year');
+        $year = (int) $this->argument('year');
         if ($year === 0) {
             $year = Carbon::now()->year;
         }
@@ -41,6 +41,7 @@ class HolidaysImportCommand extends Command
     {
         if ($response['feiertage'] === null) {
             $this->warn($response['additional_note']);
+
             return Command::FAILURE;
         }
         foreach ($response['feiertage'] as $item) {
@@ -66,6 +67,7 @@ class HolidaysImportCommand extends Command
                 'thuringen' => $item['th'] === '1',
             ]);
         }
+
         return Command::SUCCESS;
     }
 }

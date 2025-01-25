@@ -11,23 +11,23 @@ class LaravelHolidaysDeServiceProvider extends ServiceProvider
     {
         $this->registerPublications();
         $this->registerCommands();
-        $this->mergeConfigFrom(__DIR__ . '/../config/holidays-de.php', 'holidays-de');
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->mergeConfigFrom(__DIR__.'/../config/holidays-de.php', 'holidays-de');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 
     protected function registerPublications(): void
     {
-        if (!$this->app->runningInConsole()) {
+        if (! $this->app->runningInConsole()) {
             return;
         }
         $this->publishes([
-            __DIR__ . '/../config/holidays-de.php' => config_path('holidays-de.php'),
+            __DIR__.'/../config/holidays-de.php' => config_path('holidays-de.php'),
         ], 'holiday-config');
     }
 
     protected function registerCommands(): void
     {
-        if (!$this->app->runningInConsole()) {
+        if (! $this->app->runningInConsole()) {
             return;
         }
         $this->commands([

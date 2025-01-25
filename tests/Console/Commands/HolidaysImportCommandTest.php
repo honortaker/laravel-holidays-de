@@ -14,11 +14,15 @@ class HolidaysImportCommandTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected string|null $requestedUrl = null;
+    protected ?string $requestedUrl = null;
+
     protected string $dummyResponseFile = self::exampleSuccess;
-    const exampleSuccess = __DIR__ . '/../../Mock/ApiResponses/example-success.json';
-    const exampleMissingData = __DIR__ . '/../../Mock/ApiResponses/example-missingdata.json';
-    const exampleError = __DIR__ . '/../../Mock/ApiResponses/example-error.json';
+
+    const exampleSuccess = __DIR__.'/../../Mock/ApiResponses/example-success.json';
+
+    const exampleMissingData = __DIR__.'/../../Mock/ApiResponses/example-missingdata.json';
+
+    const exampleError = __DIR__.'/../../Mock/ApiResponses/example-error.json';
 
     protected function setUp(): void
     {
@@ -27,11 +31,12 @@ class HolidaysImportCommandTest extends TestCase
         Http::fake(function (Request $request, array $options) {
             $this->requestedUrl = $request->url();
             $json = json_decode(file_get_contents($this->dummyResponseFile), true);
+
             return Http::response($json);
         });
     }
 
-    #region [ARGS]
+    // region [ARGS]
 
     public function test_year_default_argument(): void
     {
@@ -65,9 +70,9 @@ class HolidaysImportCommandTest extends TestCase
             ->assertFailed();
     }
 
-    #endregion [ARGS]
+    // endregion [ARGS]
 
-    #region [COMMAND]
+    // region [COMMAND]
 
     public function test_success()
     {
@@ -104,5 +109,5 @@ class HolidaysImportCommandTest extends TestCase
             ->assertFailed();
     }
 
-    #endregion [COMMAND]
+    // endregion [COMMAND]
 }

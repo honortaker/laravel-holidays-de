@@ -32,7 +32,7 @@ class HolidayTest extends TestCase
         'thuringen' => true,
     ];
 
-    #region [CRUD]
+    // region [CRUD]
 
     public function test_create(): void
     {
@@ -44,5 +44,5 @@ class HolidayTest extends TestCase
         $this->assertModelExists($model);
     }
 
-    #endregion [CRUD]
+    // endregion [CRUD]
 }
