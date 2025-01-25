@@ -1,12 +1,20 @@
 {
     "name": "honortaker/laravel-holidays-de",
     "description": "Import german holidays into your laravel application",
+    "license": "MIT",
     "type": "library",
     "keyworkds": [
         "honortaker",
         "laravel",
         "holidays",
         "import"
+    ],
+    "authors": [
+        {
+            "name": "honortaker",
+            "role": "owner",
+            "homepage": "https://github.com/honortaker"
+        }
     ],
     "require": {
         "php": "^8.2",
