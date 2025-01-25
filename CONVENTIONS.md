@@ -13,3 +13,4 @@ Please always structure your commit messsages with the following pattern: `[$typ
 - `[BUGFIX]` when fixing a bug
 - `[STYLE]` when adjusting the code style without touching the functionality
 - `[TEST]` when adding tests
+- `[CHANGELOG]` when updating changelog for releases
