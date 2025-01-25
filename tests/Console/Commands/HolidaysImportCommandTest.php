@@ -3,6 +3,7 @@
 namespace Honortaker\LaravelHolidaysDe\Tests\Console\Commands;
 
 use Carbon\Carbon;
+use Honortaker\LaravelHolidaysDe\Console\Commands\HolidaysImportCommand;
 use Honortaker\LaravelHolidaysDe\Models\Holiday;
 use Honortaker\LaravelHolidaysDe\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -37,7 +38,7 @@ class HolidaysImportCommandTest extends TestCase
         // [GIVEN]
         $currentYear = Carbon::now()->year;
         // [WHEN]
-        $this->artisan('holidays:import');
+        $this->artisan(HolidaysImportCommand::class);
         // [THEN]
         $this->assertStringContainsString(config('holidays-de.api_url'), $this->requestedUrl);
         $this->assertStringContainsString("year={$currentYear}", $this->requestedUrl);
@@ -48,7 +49,7 @@ class HolidaysImportCommandTest extends TestCase
         // [GIVEN]
         $validArgument = 1234;
         // [WHEN]
-        $this->artisan("holidays:import {$validArgument}");
+        $this->artisan(HolidaysImportCommand::class, ['year' => $validArgument]);
         // [THEN]
         $this->assertStringContainsString(config('holidays-de.api_url'), $this->requestedUrl);
         $this->assertStringContainsString("year={$validArgument}", $this->requestedUrl);
@@ -59,8 +60,8 @@ class HolidaysImportCommandTest extends TestCase
         // [GIVEN]
         $invalidArgument = 'NaN';
         // [WHEN]
-        $this->artisan("holidays:import {$invalidArgument}")
-        // [THEN]
+        $this->artisan(HolidaysImportCommand::class, ['year' => $invalidArgument])
+            // [THEN]
             ->assertFailed();
     }
 
@@ -75,7 +76,7 @@ class HolidaysImportCommandTest extends TestCase
         // [GIVEN]
         $count = count(json_decode(file_get_contents($this->dummyResponseFile), true)['feiertage']);
         // [WHEN]
-        $this->artisan('holidays:import')
+        $this->artisan(HolidaysImportCommand::class)
             // [THEN]
             ->assertOk();
         $this->assertEquals($count, Holiday::query()->count());
@@ -87,7 +88,7 @@ class HolidaysImportCommandTest extends TestCase
         $this->dummyResponseFile = self::exampleMissingData;
         // [GIVEN]
         // [WHEN]
-        $this->artisan('holidays:import')
+        $this->artisan(HolidaysImportCommand::class)
             // [THEN]
             ->assertFailed();
     }
@@ -98,8 +99,8 @@ class HolidaysImportCommandTest extends TestCase
         $this->dummyResponseFile = self::exampleError;
         // [GIVEN]
         // [WHEN]
-        $this->artisan('holidays:import')
-        // [THEN]
+        $this->artisan(HolidaysImportCommand::class)
+            // [THEN]
             ->assertFailed();
     }
 
